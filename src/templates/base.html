@@ -1,0 +1,28 @@
+{% load compressed %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Bazaar Demo{% endblock title %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{{ STATIC_URL }}/img/favicon.ico" rel="icon" type="image/x-icon" />
+        {% compressed_css "base" %}
+
+        <!-- Use this to quickly test CSS changes in a template,
+                then move to project.css -->
+        {% block extra_css %}{% endblock extra_css %}
+    </head>
+
+    <body class="{% block custombodyclass %}{% endblock %}">
+
+        {% include 'navbar.html' %}
+
+        <div class="container">
+            {% block content %}{% endblock content %}
+        </div>
+
+        <!-- Placed at the end of the document so the pages load faster -->
+        {% compressed_js "base" %}
+        {% block extra_js %}{% endblock extra_js %}
+    </body>
+</html>
