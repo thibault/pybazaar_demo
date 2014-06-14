@@ -46,7 +46,7 @@ BAZAAR_APPS = (
     'accounts',
 )
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS, BAZAAR_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BAZAAR_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
