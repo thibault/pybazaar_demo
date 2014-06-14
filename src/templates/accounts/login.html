@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-Login !
+
+<form method="post" action="">
+    {% csrf_token %}
+    <select name="user">
+        {% for user in users %}
+            <option value="{{ user.username }}">{{ user }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" class="btn btn-primary" value="Login" />
+</form>
 {% endblock %}
