@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>{{ _('Product') }}</th>
+            <th>{{ _('Price') }}</th>
+            <th>{{ _('Seller') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product }}</td>
+            <td>{{ product.initial_price }}</td>
+            <td>{{ product.owner }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
