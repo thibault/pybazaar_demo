@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from shop.views import ProductList
+from shop.views import ProductList, Bargain
 
 
 urlpatterns = patterns(
@@ -8,4 +8,7 @@ urlpatterns = patterns(
     url('^$',
         ProductList.as_view(),
         name='shop'),
+    url('^(?P<product_id>\d+)/$',
+        Bargain.as_view(),
+        name='bargain'),
 )

@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from shop.models import Product
 
@@ -11,3 +11,7 @@ class ProductList(ListView):
         products = Product.objects \
             .exclude(owner=self.request.user)
         return products
+
+
+class Bargain(DetailView):
+    template_name = 'shop/bargain.html'
