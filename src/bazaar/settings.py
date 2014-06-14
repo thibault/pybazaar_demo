@@ -38,11 +38,15 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
 )
 
+THIRD_PARTY_APPS = (
+    'pipeline',
+)
+
 BAZAAR_APPS = (
     'accounts',
 )
 
-INSTALLED_APPS = DJANGO_APPS + BAZAAR_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS, BAZAAR_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -86,3 +90,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+PIPELINE_CSS = {
+    'base': {
+        'source_filenames': (
+            'css/base.css',
+        ),
+        'output_filename': 'css/base.css',
+    },
+}
+
+PIPELINE_JS = {
+    'base': {
+        'source_filenames': (
+            'js/base.js',
+        ),
+        'output_filename': 'js/base.js',
+    }
+}
