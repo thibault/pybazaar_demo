@@ -15,3 +15,5 @@ class ProductList(ListView):
 
 class Bargain(DetailView):
     template_name = 'shop/bargain.html'
+    model = Product
+    context_object_name = 'product'

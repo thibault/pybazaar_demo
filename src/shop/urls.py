@@ -8,7 +8,7 @@ urlpatterns = patterns(
     url('^$',
         ProductList.as_view(),
         name='shop'),
-    url('^(?P<product_id>\d+)/$',
+    url('^(?P<pk>\d+)/$',
         Bargain.as_view(),
         name='bargain'),
 )

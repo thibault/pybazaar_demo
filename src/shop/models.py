@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
@@ -17,3 +18,6 @@ class Product(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_bargain_url(self):
+        return reverse('bargain', args=[self.id])

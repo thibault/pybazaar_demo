@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>Shop</h1>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -12,7 +13,7 @@
     <tbody>
         {% for product in products %}
         <tr>
-            <td>{{ product }}</td>
+            <td><a href="{{ product.get_bargain_url }}">{{ product }}</a></td>
             <td>{{ product.initial_price }}</td>
             <td>{{ product.owner }}</td>
         </tr>
