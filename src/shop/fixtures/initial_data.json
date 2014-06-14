@@ -1,0 +1,20 @@
+[
+{
+  "pk": 1,
+  "model": "shop.product",
+  "fields": {
+    "owner": 2,
+    "name": "A pen",
+    "initial_price": 1000000
+  }
+},
+{
+  "pk": 2,
+  "model": "shop.product",
+  "fields": {
+    "owner": 2,
+    "name": "My car",
+    "initial_price": 1000000000000
+  }
+}
+]

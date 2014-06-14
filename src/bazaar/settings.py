@@ -45,6 +45,7 @@ THIRD_PARTY_APPS = (
 
 BAZAAR_APPS = (
     'accounts',
+    'shop',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BAZAAR_APPS
