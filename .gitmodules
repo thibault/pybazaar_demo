@@ -1,0 +1,3 @@
+[submodule "src/pybazaar_protocol"]
+	path = src/pybazaar_protocol
+	url = https://github.com/LaurentMT/pybazaar_protocol.git
