@@ -6,7 +6,10 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 from pybazaar_protocol.negotiation import Negotiation
-from pybazaar_protocol.messages import BargainInitDetails, BargainRequestDetails
+from pybazaar_protocol.messages import (
+    BargainInitDetails, BargainRequestDetails, BargainProposalDetails,
+    SIGN_ECDSA_SHA256
+)
 from bitcoin import address_to_script
 
 from shop.models import Product
@@ -75,3 +78,47 @@ class Bargain(models.Model):
 
         self.nego_buyer = pickle.dumps(nego_buyer)
         self.nego_seller = pickle.dumps(nego_seller)
+
+    def create_message(self, user, price, memo):
+        if user == self.buyer:
+            self.create_buyer_message(price, memo)
+        else:
+            self.create_seller_message(price, memo)
+
+    def create_buyer_message(self, price, memo):
+        wallet = Wallet.objects.get_for_user(self.buyer)
+        inputs = [{
+            'output': u'6317c147efc54f1c0291cd5cc403db289c5228d054f0cf2ff91265c480efd385:0',
+            'value': price,
+            'address': wallet.address,
+            'privkey': wallet.privkey
+        }]
+        nego_buyer = pickle.loads(self.nego_buyer)
+        last_msg = nego_buyer.get_last_message_received()
+        refund_to = [{'script': address_to_script(wallet.address)}]
+        details = BargainProposalDetails(
+            inputs,
+            last_msg.details.outputs,
+            price,
+            refund_to,
+            [],
+            memo.encode(),
+            '',
+            ''
+        )
+        msg = nego_buyer.build_bargain_proposal(
+            details,
+            SIGN_ECDSA_SHA256,
+            wallet.pubkey.encode(),
+            wallet.privkey
+        )
+
+        nego_seller = pickle.loads(self.nego_seller)
+        nego_seller.check_bargain_proposal(msg)
+
+        self.nego_buyer = pickle.dumps(nego_buyer)
+        self.nego_seller = pickle.dumps(nego_seller)
+        self.save()
+
+    def create_seller_message(self, price, memo):
+        pass

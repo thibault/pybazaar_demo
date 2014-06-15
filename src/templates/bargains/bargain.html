@@ -10,12 +10,12 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>{{ _('Your message') }}</label>
-                <textarea rows="3" class="form-control"></textarea>
+                <textarea name="memo" rows="3" class="form-control"></textarea>
             </div>
 
             <div class="form-group">
                 <label>{{ _('Your price') }}</label>
-                <input type="integer" class="form-control"></input>
+                <input name="price" type="integer" class="form-control"></input>
             </div>
 
             <div class="row">
@@ -37,43 +37,11 @@
                     {{ message.details.amount }}
                 </div>
                 <div class="panel-body">
-                    {{ message.memo }}
+                    {{ message.details.memo }}
                 </div>
             </div>
 
             {% endfor %}
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-arrow-left"></span>
-                    95,000,000, on 2014-14-06 09:08
-                </div>
-                <div class="panel-body">
-                    My pen is the best pen. Also, it's a blue pen. Blue pen are
-                    the best!
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-arrow-right"></span>
-                    50,000,000, on 2014-14-06 09:05
-                </div>
-                <div class="panel-body">
-                    Yes, but this is a very expensive pen
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-arrow-left"></span>
-                    100,000,000, on 2014-14-06 09:00
-                </div>
-                <div class="panel-body">
-                    This is a good pen
-                </div>
-            </div>
-
         </div>
     </div>
 </form>

@@ -18,3 +18,11 @@ class Bargain(DetailView):
     template_name = 'bargains/bargain.html'
     model = Bargain
     context_object_name = 'bargain'
+
+    def post(self, *args, **kwargs):
+        price = int(self.request.POST.get('price'))
+        memo = self.request.POST.get('memo')
+        bargain = self.get_object()
+        bargain.create_message(self.request.user, price, memo)
+
+        return http.HttpResponseRedirect(bargain.get_absolute_url())
