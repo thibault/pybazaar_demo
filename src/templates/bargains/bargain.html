@@ -34,10 +34,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-arrow-left"></span>
-                    {{ message.amount }} on {{ message.date|date }}
+                    {{ message.details.amount }}
                 </div>
                 <div class="panel-body">
-                    {{ message.body }}
+                    {{ message.memo }}
                 </div>
             </div>
 
