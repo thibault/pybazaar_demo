@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from pybazaar_protocol.negotiation import Negotiation
 from pybazaar_protocol.messages import (
     BargainInitDetails, BargainRequestDetails, BargainProposalDetails,
-    SIGN_ECDSA_SHA256
+    BargainProposalAckDetails, SIGN_ECDSA_SHA256
 )
 from bitcoin import address_to_script
 
@@ -121,4 +121,27 @@ class Bargain(models.Model):
         self.save()
 
     def create_seller_message(self, price, memo):
-        pass
+        wallet = Wallet.objects.get_for_user(self.product.owner)
+        output = [{
+            'amount': price,
+            'script': address_to_script(wallet.address)
+        }]
+        details = BargainProposalAckDetails(
+            output,
+            memo,
+            '', ''
+        )
+        nego_seller = pickle.loads(self.nego_seller)
+        msg = nego_seller.build_bargain_proposal_ack(
+            details,
+            SIGN_ECDSA_SHA256,
+            wallet.pubkey,
+            wallet.privkey
+        )
+
+        nego_buyer = pickle.loads(self.nego_buyer)
+        nego_buyer.check_bargain_proposal_ack(msg)
+
+        self.nego_buyer = pickle.dumps(nego_buyer)
+        self.nego_seller = pickle.dumps(nego_seller)
+        self.save()
