@@ -43,14 +43,14 @@ class Bargain(models.Model):
         has_received = True
         while has_sent or has_received:
             try:
-                yield sent.next()
-            except StopIteration:
-                has_sent = False
-
-            try:
                 yield received.next()
             except StopIteration:
                 has_received = False
+
+            try:
+                yield sent.next()
+            except StopIteration:
+                has_sent = False
 
     def init_negotiation(self):
         wallet = Wallet.objects.get_for_user(self.product.owner)
