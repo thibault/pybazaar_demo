@@ -32,6 +32,27 @@ class Bargain(models.Model):
         wallet = Wallet.objects.get_for_user(self.product.owner)
         return wallet.pubkey
 
+    def messages(self):
+        nego = pickle.loads(self.nego_buyer)
+        sent = iter(nego._msg_sent)
+        received = iter(nego._msg_received)
+
+        # Get rid of the initial BargainInit
+        sent.next()
+
+        has_sent = True
+        has_received = True
+        while has_sent or has_received:
+            try:
+                yield sent.next()
+            except StopIteration:
+                has_sent = False
+
+            try:
+                yield received.next()
+            except StopIteration:
+                has_received = False
+
     def init_negotiation(self):
         nego_buyer = Negotiation(role=Negotiation.ROLE_BUYER)
         nego_seller = Negotiation(role=Negotiation.ROLE_SELLER)
