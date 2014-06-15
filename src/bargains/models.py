@@ -31,10 +31,6 @@ class Bargain(models.Model):
 
         return super(Bargain, self).save()
 
-    def get_seller_address(self):
-        wallet = Wallet.objects.get_for_user(self.product.owner)
-        return wallet.pubkey
-
     def messages(self):
         nego = pickle.loads(self.nego_buyer)
         sent = iter(nego._msg_sent)
@@ -57,6 +53,8 @@ class Bargain(models.Model):
                 has_received = False
 
     def init_negotiation(self):
+        wallet = Wallet.objects.get_for_user(self.product.owner)
+
         nego_buyer = Negotiation(role=Negotiation.ROLE_BUYER)
         nego_seller = Negotiation(role=Negotiation.ROLE_SELLER)
 
@@ -66,12 +64,13 @@ class Bargain(models.Model):
 
         output = [{
             'amount': self.product.initial_price,
-            'script': address_to_script(self.get_seller_address())
+            'script': address_to_script(wallet.address)
         }]
         details = BargainRequestDetails(
             int(time.time()),
             output,
             expires=int(time.time()) + 3600,
+            memo='Hello! Do you want to buy my wonderful product?',
         )
         request_msg = nego_seller.build_bargain_request(details)
         nego_buyer.check_bargain_request(request_msg)
