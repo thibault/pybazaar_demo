@@ -52,6 +52,19 @@ class Bargain(models.Model):
             except StopIteration:
                 has_sent = False
 
+    def gap(self):
+        nego = pickle.loads(self.nego_buyer)
+        last_received = nego.get_last_message_received()
+        last_sent = nego.get_last_message_sent()
+
+        try:
+            required_price = last_received.details.amount
+            proposed_price = last_sent.details.amount
+        except AttributeError:
+            return self.product.initial_price
+
+        return max(required_price - proposed_price, 0)
+
     def init_negotiation(self):
         wallet = Wallet.objects.get_for_user(self.product.owner)
 

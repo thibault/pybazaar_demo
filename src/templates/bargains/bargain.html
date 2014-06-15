@@ -2,31 +2,44 @@
 {% load bargains %}
 
 {% block content %}
+
 <h1>{{ bargain.product }}</h1>
+
+{% if bargain.gap == 0 %}
+<div class="alert alert-success">
+    Great! We just confirmed your order and processed the payment.
+</div>
+{% endif %}
+
+<h2>Price gap: {{ bargain.gap }} mBTC</h2>
 
 <form method="post" action="" class="form">
     {% csrf_token %}
 
     <div class="row">
         <div class="col-md-6">
-            <div class="form-group">
-                <label>{{ _('Your message') }}</label>
-                <textarea name="memo" rows="3" class="form-control"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>{{ _('Your price') }}</label>
-                <input name="price" type="integer" class="form-control"></input>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="submit" class="btn btn-primary btn-block" />
+            {% if bargain.gap == 0 %}
+                <img src="http://placekitten.com/500/350" style="max-width: 100%; width: 100%" />
+            {% else %}
+                <div class="form-group">
+                    <label>{{ _('Your message') }}</label>
+                    <textarea name="memo" rows="3" class="form-control"></textarea>
                 </div>
-                <div class="col-md-6">
-                    <a href="#" class="btn btn-default btn-block" >{{ _('Cancel') }}</a>
+
+                <div class="form-group">
+                    <label>{{ _('Your price') }}</label>
+                    <input name="price" type="integer" class="form-control"></input>
                 </div>
-            </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <input value="Send" type="submit" class="btn btn-primary btn-block" />
+                    </div>
+                    <div class="col-md-6">
+                        <a href="#" class="btn btn-default btn-block" >{{ _('Cancel') }}</a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
 
         <div class="col-md-6">
@@ -35,7 +48,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     {% bargain_author user bargain message %}
-                    {{ message.details.amount }}
+                    {{ message.details.amount }} mBTC
                 </div>
                 <div class="panel-body">
                     {{ message.details.memo }}

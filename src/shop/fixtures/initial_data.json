@@ -5,7 +5,7 @@
   "fields": {
     "owner": 2,
     "name": "A pen",
-    "initial_price": 1000000
+    "initial_price": 100
   }
 },
 {
@@ -14,7 +14,7 @@
   "fields": {
     "owner": 2,
     "name": "My car",
-    "initial_price": 1000000000000
+    "initial_price": 1000
   }
 }
 ]
