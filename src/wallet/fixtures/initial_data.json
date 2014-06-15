@@ -4,7 +4,6 @@
   "model": "wallet.wallet",
   "fields": {
     "user": 1,
-    "pubkey": "15Ts8Du5takaZLJHdLd2sR1bxVq5QeR2EM",
     "privkey": "5Hsu2mSz1iLqibixZJUsGXDYpoJ2T4Kxq7RtqvPBiAzwCGM6Q5W",
     "amount": 100000000000
   }
@@ -14,7 +13,6 @@
   "model": "wallet.wallet",
   "fields": {
     "user": 2,
-    "pubkey": "112NpHmFCnDoV3JfL6BN2pCYJCvhWgPN2C",
     "privkey": "5JqzF534nNTNQPEubcdK13i3YoXLSFb1NRn5kuUnPzuw6oEf8Gg",
     "amount": 100000000000
   }
